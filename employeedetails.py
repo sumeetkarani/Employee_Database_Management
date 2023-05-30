@@ -26,7 +26,7 @@ def add_command():
     """
     if Name.get()=="" or Department.get()=="" or Identity.get()=="" or Salary.get()=="":
         errormessage("(All fields are required)")
-    elif len(re.findall("^\d{6}$",identity_text.get()))==0:
+    elif len(re.findall("^\d{4}$",identity_text.get()))==0:
         errormessage("Employee ID")
     elif len(re.findall("\d+", Salary_text.get()))==0:
         errormessage("Price")
@@ -48,7 +48,7 @@ def get_selected_row(event):
     """
     try:
         global selected_tuple
-        index = list1.curselection()[0]
+        index = list1.curselection()[0] 
         selected_tuple=list1.get(index)
         
         Name.delete(0,END)
@@ -80,20 +80,22 @@ def delete_command():
     except NameError:
         errormessage("(No field selected)")
 
+selected_tuple = None
+
 def update_command():
-    # Updating the selected tuple in the database and then calling the viewcommand() function to
-    # update the listbox.
     try:
-        if len(re.findall("^\d{6}$",identity_text.get()))==0:
+        if selected_tuple is None:
+            errormessage("(No field selected)")
+        elif len(re.findall("^\d{4}$", identity_text.get())) == 0:
             errormessage("Employee ID")
-        elif len(re.findall("\d+", Salary_text.get()))==0:
+        elif len(re.findall("\d+", Salary_text.get())) == 0:
             errormessage("Salary")
-        elif len(re.findall("^[a-zA-Z0-9 ]+$", department_text.get()))==0:
+        elif len(re.findall("^[a-zA-Z0-9 ]+$", department_text.get())) == 0:
             errormessage("Department")
-        elif len(re.findall("^[a-zA-Z0-9 ]+$", name_text.get()))==0:
+        elif len(re.findall("^[a-zA-Z0-9 ]+$", name_text.get())) == 0:
             errormessage("Name")
         else:
-            backend.update(selected_tuple[0],name_text.get(),department_text.get(),identity_text.get(),Salary_text.get())
+            backend.update(selected_tuple[0], name_text.get(), department_text.get(), identity_text.get(), Salary_text.get())
             viewcommand()
     except NameError:
         errormessage("(No field selected)")

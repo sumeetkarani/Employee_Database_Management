@@ -5,9 +5,8 @@ def connect():
     It creates a database called employee.db and creates a table for employeedetails.
     """
     conn=sqlite3.connect("employee.db")
-    cur=conn.cursor()
-#    cur.execute("DROP TABLE IF EXISTS employeedetails")  
-    cur.execute("CREATE TABLE IF NOT EXISTS employeedetails (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,department TEXT,employeeid INTEGER,salary INTEGER)")
+    cur=conn.cursor()  
+    cur.execute("CREATE TABLE IF NOT EXISTS employeedetails (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,department TEXT,identity INTEGER,salary INTEGER)")
     conn.commit()
     conn.close()
 
@@ -55,14 +54,10 @@ def delete(id):
     conn.commit()
     conn.close()
 
-def update(id,name,department,identity,Salary):
-    """
-    It takes the details of the employee, and the new values for the name, department, employee id, and Salary, and updates
-    the database with the new values.
-    """
-    conn=sqlite3.connect("employee.db")
-    cur=conn.cursor()
-    cur.execute("UPDATE employeedetails SET name=?, department=?, employeeid=?, salary=? WHERE id=?", (name, department, identity, Salary, id))
+def update(id, name, department, identity, Salary):
+    conn = sqlite3.connect("employee.db")
+    cur = conn.cursor()
+    cur.execute("UPDATE employeedetails SET name=?, department=?, identity=?, salary=? WHERE id=?", (name, department, identity, Salary, id))
     conn.commit()
     conn.close()
 
